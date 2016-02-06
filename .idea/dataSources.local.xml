@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - fleet_management@localhost" uuid="9c1fc2ff-4f9a-4108-a2aa-5b3c0e99952f">
+      <secret-storage>master_key</secret-storage>
+      <user-name>si</user-name>
+      <schema-pattern>fleet_management.*</schema-pattern>
+      <default-schemas>fleet_management.*</default-schemas>
+    </data-source>
+    <data-source name="MySQL - sql369964@sql3.freesqldatabase.com" uuid="734d5668-62b1-46ab-bdc8-65fccf26f928">
+      <secret-storage>master_key</secret-storage>
+      <user-name>sql369964</user-name>
+      <schema-pattern>sql369964.*</schema-pattern>
+      <default-schemas>sql369964.*</default-schemas>
+    </data-source>
+  </component>
+</project>

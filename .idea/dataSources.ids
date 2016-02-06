@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - fleet_management@localhost" uuid="9c1fc2ff-4f9a-4108-a2aa-5b3c0e99952f">
+    <database-info product="MySQL" version="5.5.38" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <schema name="" catalog="fleet_management"/>
+    <table name="Admin" schema="" catalog="fleet_management" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="passw" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="appointedDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="lastLoginDate" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="username"/>
+      <exported-key name="admin_fleet_map_ibfk_3" table="Admin_Fleet_Map" schema="" catalog="fleet_management" columns="loggedBy"/>
+      <exported-key name="admin_logs_ibfk_1" table="Admin_Logs" schema="" catalog="fleet_management" columns="username"/>
+      <exported-key name="admin_vehicle_map_ibfk_2" table="Admin_Vehicle_Map" schema="" catalog="fleet_management" columns="username"/>
+    </table>
+    <table name="Admin_Fleet_Map" schema="" catalog="fleet_management" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="loggedBy" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fleetAlias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="loggedDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modifyDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="admin_fleet_map_ibfk_2" columns="fleetAlias" ref-table="Fleet" ref-schema="" ref-catalog="fleet_management" ref-columns="alias" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="admin_fleet_map_ibfk_3" columns="loggedBy" ref-table="Admin" ref-schema="" ref-catalog="fleet_management" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Admin_Logs" schema="" catalog="fleet_management" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dateLogged" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="notes" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <foreign-key name="admin_logs_ibfk_1" columns="username" ref-table="Admin" ref-schema="" ref-catalog="fleet_management" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Admin_Vehicle_Map" schema="" catalog="fleet_management" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="admin_vehicle_map_ibfk_1" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="fleet_management" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="admin_vehicle_map_ibfk_2" columns="username" ref-table="Admin" ref-schema="" ref-catalog="fleet_management" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Area" schema="" catalog="fleet_management" type="TABLE">
+      <column name="id" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="division_ibfk_1" table="Division" schema="" catalog="fleet_management" columns="AreaID"/>
+    </table>
+    <table name="Division" schema="" catalog="fleet_management" type="TABLE">
+      <column name="DivisionID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="AreaID" sqlType="VARCHAR" precision="5" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="DivisionID"/>
+      <foreign-key name="division_ibfk_1" columns="AreaID" ref-table="Area" ref-schema="" ref-catalog="fleet_management" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="station_ibfk_1" table="Station" schema="" catalog="fleet_management" columns="DivisionID"/>
+    </table>
+    <table name="Fleet" schema="" catalog="fleet_management" type="TABLE">
+      <column name="alias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dateCreated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="lastModified" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modifiedBy" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="alias"/>
+      <exported-key name="admin_fleet_map_ibfk_2" table="Admin_Fleet_Map" schema="" catalog="fleet_management" columns="fleetAlias"/>
+      <exported-key name="fleet_vehicle_map_ibfk_1" table="Fleet_Vehicle_Map" schema="" catalog="fleet_management" columns="alias"/>
+    </table>
+    <table name="Fleet_Vehicle_Map" schema="" catalog="fleet_management" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="alias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fleet_vehicle_map_ibfk_1" columns="alias" ref-table="Fleet" ref-schema="" ref-catalog="fleet_management" ref-columns="alias" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fleet_vehicle_map_ibfk_2" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="fleet_management" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Officer" schema="" catalog="fleet_management" type="TABLE">
+      <column name="badgeNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="firstName" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rank" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dob" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="mStatus" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="parish" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="noteWorthy" sqlType="TEXT" precision="16383" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="nationality" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pNumber" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="badgeNum"/>
+      <exported-key name="vehicle_officer_map_ibfk_1" table="Vehicle_Officer_Map" schema="" catalog="fleet_management" columns="badgeNum"/>
+    </table>
+    <table name="Station" schema="" catalog="fleet_management" type="TABLE">
+      <column name="StationID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="DivisionID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="StationID"/>
+      <foreign-key name="station_ibfk_1" columns="DivisionID" ref-table="Division" ref-schema="" ref-catalog="fleet_management" ref-columns="DivisionID" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Vehicle" schema="" catalog="fleet_management" type="TABLE">
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vCondition" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="gasAmount" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="color" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="chassisNum"/>
+      <exported-key name="admin_vehicle_map_ibfk_1" table="Admin_Vehicle_Map" schema="" catalog="fleet_management" columns="chassisNum"/>
+      <exported-key name="fleet_vehicle_map_ibfk_2" table="Fleet_Vehicle_Map" schema="" catalog="fleet_management" columns="chassisNum"/>
+      <exported-key name="vehicle_officer_map_ibfk_2" table="Vehicle_Officer_Map" schema="" catalog="fleet_management" columns="chassisNum"/>
+    </table>
+    <table name="Vehicle_Officer_Map" schema="" catalog="fleet_management" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="badgeNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="vehicle_officer_map_ibfk_1" columns="badgeNum" ref-table="Officer" ref-schema="" ref-catalog="fleet_management" ref-columns="badgeNum" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="vehicle_officer_map_ibfk_2" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="fleet_management" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+  </data-source>
+  <data-source name="MySQL - sql369964@sql3.freesqldatabase.com" uuid="734d5668-62b1-46ab-bdc8-65fccf26f928">
+    <database-info product="MySQL" version="5.5.40-0ubuntu0.12.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="sql369964"/>
+    <table name="Admin" schema="" catalog="sql369964" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="passw" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="appointedDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="lastLoginDate" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="username"/>
+      <exported-key name="admin_fleet_map_ibfk_3" table="Admin_Fleet_Map" schema="" catalog="sql369964" columns="loggedBy"/>
+      <exported-key name="admin_logs_ibfk_1" table="Admin_Logs" schema="" catalog="sql369964" columns="username"/>
+      <exported-key name="admin_vehicle_map_ibfk_2" table="Admin_Vehicle_Map" schema="" catalog="sql369964" columns="username"/>
+    </table>
+    <table name="Admin_Fleet_Map" schema="" catalog="sql369964" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="loggedBy" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fleetAlias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="loggedDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modifyDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="admin_fleet_map_ibfk_2" columns="fleetAlias" ref-table="Fleet" ref-schema="" ref-catalog="sql369964" ref-columns="alias" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="admin_fleet_map_ibfk_3" columns="loggedBy" ref-table="Admin" ref-schema="" ref-catalog="sql369964" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Admin_Logs" schema="" catalog="sql369964" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dateLogged" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="notes" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <foreign-key name="admin_logs_ibfk_1" columns="username" ref-table="Admin" ref-schema="" ref-catalog="sql369964" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Admin_Vehicle_Map" schema="" catalog="sql369964" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="admin_vehicle_map_ibfk_1" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="sql369964" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="admin_vehicle_map_ibfk_2" columns="username" ref-table="Admin" ref-schema="" ref-catalog="sql369964" ref-columns="username" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Area" schema="" catalog="sql369964" type="TABLE">
+      <column name="id" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="division_ibfk_1" table="Division" schema="" catalog="sql369964" columns="AreaID"/>
+    </table>
+    <table name="Division" schema="" catalog="sql369964" type="TABLE">
+      <column name="DivisionID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="AreaID" sqlType="VARCHAR" precision="5" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="DivisionID"/>
+      <foreign-key name="division_ibfk_1" columns="AreaID" ref-table="Area" ref-schema="" ref-catalog="sql369964" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="station_ibfk_1" table="Station" schema="" catalog="sql369964" columns="DivisionID"/>
+    </table>
+    <table name="Fleet" schema="" catalog="sql369964" type="TABLE">
+      <column name="alias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dateCreated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="lastModified" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modifiedBy" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="alias"/>
+      <exported-key name="admin_fleet_map_ibfk_2" table="Admin_Fleet_Map" schema="" catalog="sql369964" columns="fleetAlias"/>
+      <exported-key name="fleet_vehicle_map_ibfk_1" table="Fleet_Vehicle_Map" schema="" catalog="sql369964" columns="alias"/>
+    </table>
+    <table name="Fleet_Vehicle_Map" schema="" catalog="sql369964" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="alias" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fleet_vehicle_map_ibfk_1" columns="alias" ref-table="Fleet" ref-schema="" ref-catalog="sql369964" ref-columns="alias" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fleet_vehicle_map_ibfk_2" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="sql369964" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Officer" schema="" catalog="sql369964" type="TABLE">
+      <column name="badgeNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="firstName" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rank" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dob" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="mStatus" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="parish" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="noteWorthy" sqlType="TEXT" precision="16383" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="nationality" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pNumber" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="badgeNum"/>
+      <exported-key name="vehicle_officer_map_ibfk_1" table="Vehicle_Officer_Map" schema="" catalog="sql369964" columns="badgeNum"/>
+    </table>
+    <table name="Station" schema="" catalog="sql369964" type="TABLE">
+      <column name="StationID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="DivisionID" sqlType="VARCHAR" precision="5" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="StationID"/>
+      <foreign-key name="station_ibfk_1" columns="DivisionID" ref-table="Division" ref-schema="" ref-catalog="sql369964" ref-columns="DivisionID" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="Vehicle" schema="" catalog="sql369964" type="TABLE">
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vCondition" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="gasAmount" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="color" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="station" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="division" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="area" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="chassisNum"/>
+      <exported-key name="admin_vehicle_map_ibfk_1" table="Admin_Vehicle_Map" schema="" catalog="sql369964" columns="chassisNum"/>
+      <exported-key name="fleet_vehicle_map_ibfk_2" table="Fleet_Vehicle_Map" schema="" catalog="sql369964" columns="chassisNum"/>
+      <exported-key name="vehicle_officer_map_ibfk_2" table="Vehicle_Officer_Map" schema="" catalog="sql369964" columns="chassisNum"/>
+    </table>
+    <table name="Vehicle_Officer_Map" schema="" catalog="sql369964" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="chassisNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="badgeNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="vehicle_officer_map_ibfk_1" columns="badgeNum" ref-table="Officer" ref-schema="" ref-catalog="sql369964" ref-columns="badgeNum" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="vehicle_officer_map_ibfk_2" columns="chassisNum" ref-table="Vehicle" ref-schema="" ref-catalog="sql369964" ref-columns="chassisNum" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+  </data-source>
+</component>
